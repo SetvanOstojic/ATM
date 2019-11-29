@@ -10,7 +10,9 @@ public class BankAccounts {
 
 
     BankAccounts() {
-
+        accountNumber = 0;
+        nameOfAccountHolder = null;
+        accountBalance = 0;
     }
 
     BankAccounts(int accountNumber, String nameOfAccountHolder, double accountBalance) {

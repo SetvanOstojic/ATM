@@ -1,5 +1,6 @@
 package com.StevanOstojic;
 
+import java.io.*;
 import java.util.*;
 
 public class ATM {
@@ -38,12 +39,34 @@ public class ATM {
                         accountsDataBase = transferMoney(accountsDataBase);
                     break;
                 case 3:
-                    //Choice 3. lets the user see all the account in the bank. //Working progress... to be modified!
-                    System.out.println("The list of all the account in the Bank. Access granted only to Admin's!");
-                    printingListOfTheCurrentAccounts(accountsDataBase);
+                    //Choice 3. lets the user see all the account in the bank.
+                    System.out.println("The list of all the account in the Bank. Access granted only to Admin's Account. \n Please input the Admin account Name and Password.");
+                    AdminAccount admin = new AdminAccount();
+                    adminDataInputCheck(admin, accountsDataBase);
+
                     break;
             }
         } while (in.nextInt() != 0);
+    }
+
+    private static void adminDataInputCheck(AdminAccount admin, ArrayList<BankAccounts> accountsDataBase) {
+        boolean inputData = true;
+        do {
+            try {
+                String adminName = in.next();
+                int adminPin = in.nextInt();
+                if (adminPin != admin.getAdminPINNumber() || adminName != admin.getAdminName()) {
+                    System.out.println("The admin pin and/or name are not correct, please try again!");
+                } else
+                    printingListOfTheCurrentAccounts(accountsDataBase);
+                inputData = false;
+            } catch (InputMismatchException ex) {
+                System.out.println("Data entered is incorect! Please try again.");
+                in.next();
+                in.nextInt();
+            }
+
+        } while (inputData);
     }
 
     // The account creation method.
@@ -118,6 +141,7 @@ public class ATM {
             }
         }
         return accountsArrayList;
+
     }
 
     static void addToSecondAccountBalance(ArrayList<BankAccounts> accountsArrayList, double ammountTransferd, int accountReceving) {
