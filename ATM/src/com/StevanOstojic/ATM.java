@@ -53,17 +53,19 @@ public class ATM {
         boolean inputData = true;
         do {
             try {
-                String adminName = in.next();
-                int adminPin = in.nextInt();
-                if (adminPin != admin.getAdminPINNumber() || adminName != admin.getAdminName()) {
-                    System.out.println("The admin pin and/or name are not correct, please try again!");
-                } else
-                    printingListOfTheCurrentAccounts(accountsDataBase);
-                inputData = false;
+                do {
+                    String adminName = in.next();
+                    int adminPin = in.nextInt();
+                    if (!adminName.equals(admin.getAdminName()) || adminPin != admin.getAdminPINNumber()) {
+                        System.out.println("Admin account name and/or number are not valid input, please try again!");
+                    } else if (adminName.equals(admin.getAdminName()) && adminPin == admin.getAdminPINNumber()) {
+                        printingListOfTheCurrentAccounts(accountsDataBase);
+                        inputData = false;
+                    }
+                } while (inputData);
             } catch (InputMismatchException ex) {
-                System.out.println("Data entered is incorect! Please try again.");
-                in.next();
-                in.nextInt();
+                System.out.println("Data not correct, please try again!");
+                in.nextLine();
             }
 
         } while (inputData);
