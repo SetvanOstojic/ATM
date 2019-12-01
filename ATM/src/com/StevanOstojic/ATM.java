@@ -1,55 +1,11 @@
 package com.StevanOstojic;
 
-import java.io.*;
 import java.util.*;
 
 public class ATM {
     public static Scanner in = new Scanner(System.in);
 
-    public static void main(String[] args) {
-
-        //The ArrayList holds the data of all account created in the Bank.
-
-        ArrayList<BankAccounts> accountsDataBase = new ArrayList<BankAccounts>();
-
-        System.out.println("\t\tWelcome to  Bank of Sonny");
-        //This variable lets the user choose the options in the Main Menu.
-        int choice;
-        do {
-            System.out.println("Thank you for choosing our Bank!");
-            System.out.println(" 1. Create an Account. \n 2. Transfer money. \n 3. Listing of accounts.");
-            choice = in.nextInt();
-            switch (choice) {
-                //Choice 1. Lets the user create and account in the bank.
-                case 1:
-                    System.out.println("Thank you for choosing our Bank! \n Please input the Account Number & your Name");
-                    BankAccounts addingAccount = new BankAccounts(in.nextInt(), in.next(), 10.00);
-                    // As th name implies, the account is created in the method and then added to the accountDataBase.
-                    accountsDataBase = accountCreationMethod(addingAccount, accountsDataBase);
-                    break;
-                case 2:
-                    //Choice 2. lets the user Transfer the money to another account or withdraw the money from the bank.
-                    BankAccounts acc = new BankAccounts();
-                    System.out.println("Thank you for you'r trust in our Bank. \n Please select to: \n 1.Deposit Money \n 2.Withdraw Money \n 3. Transfer Money.");
-                    if (in.nextInt() == 1) {
-                        accountsDataBase = depositeMoney(accountsDataBase);
-                    } else if (in.nextInt() == 2) {
-                        accountsDataBase = withdrawMoney(accountsDataBase);
-                    } else if (in.nextInt() == 3)
-                        accountsDataBase = transferMoney(accountsDataBase);
-                    break;
-                case 3:
-                    //Choice 3. lets the user see all the account in the bank.
-                    System.out.println("The list of all the account in the Bank. Access granted only to Admin's Account. \n Please input the Admin account Name and Password.");
-                    AdminAccount admin = new AdminAccount();
-                    adminDataInputCheck(admin, accountsDataBase);
-
-                    break;
-            }
-        } while (in.nextInt() != 0);
-    }
-
-    private static void adminDataInputCheck(AdminAccount admin, ArrayList<BankAccounts> accountsDataBase) {
+    static void adminDataInputCheck(AdminAccount admin, ArrayList<BankAccounts> accountsDataBase) {
         boolean inputData = true;
         do {
             try {
@@ -72,7 +28,8 @@ public class ATM {
     }
 
     // The account creation method.
-    static ArrayList<BankAccounts> accountCreationMethod(BankAccounts singleAccount, ArrayList<BankAccounts> arrayListOfAccounts) {
+    static ArrayList<BankAccounts> accountCreationMethod(BankAccounts
+                                                                 singleAccount, ArrayList<BankAccounts> arrayListOfAccounts) {
         if (arrayListOfAccounts.size() > 0) {
             //The loop checks weather there is an account with the same number, in the Bank.
             for (int i = 0; i < arrayListOfAccounts.size(); i++) {
@@ -146,7 +103,8 @@ public class ATM {
 
     }
 
-    static void addToSecondAccountBalance(ArrayList<BankAccounts> accountsArrayList, double ammountTransferd, int accountReceving) {
+    static void addToSecondAccountBalance(ArrayList<BankAccounts> accountsArrayList, double ammountTransferd,
+                                          int accountReceving) {
         for (int l = 0; l < accountsArrayList.size(); l++) {
             if (accountsArrayList.get(l).getAccountNumber() == accountReceving) {
                 accountsArrayList.get(l).setAccountBalance(ammountTransferd);
